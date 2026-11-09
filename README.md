@@ -1,4 +1,4 @@
-# data-check
+# csv-validator
 
 一个用 JSON 规则配置来校验 CSV 数据的命令行工具，附带可选的桌面图形界面。
 
@@ -19,8 +19,8 @@
 从源码安装（推荐，当前版本尚未发布到 PyPI）：
 
 ```bash
-git clone https://github.com/0mengshu/data-check
-cd data-check
+git clone https://github.com/0mengshu/csv-validator
+cd csv-validator
 pip install .            # 命令行工具，零第三方依赖
 pip install ".[gui]"     # 需要图形界面时，额外安装 matplotlib
 ```
@@ -87,8 +87,8 @@ python data_check.py examples/data_bad.csv --config examples/rules.json
 1. 克隆仓库
 
 ```bash
-git clone https://github.com/0mengshu/data-check
-cd data-check
+git clone https://github.com/0mengshu/csv-validator
+cd csv-validator
 ```
 
 2. 准备一份 CSV 文件，例如 `data.csv`
