@@ -1,0 +1,2 @@
+# 图形界面（gui.py）需要 matplotlib；命令行工具（data_check.py）只依赖 Python 标准库。
+matplotlib>=3.5

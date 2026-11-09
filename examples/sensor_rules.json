@@ -1,0 +1,29 @@
+{
+    "not_null": [
+        "日期",
+        "振动mm/s",
+        "温度℃",
+        "电流A"
+    ],
+    "unique": [],
+    "columns": {
+        "日期": {
+            "type": "string"
+        },
+        "振动mm/s": {
+            "type": "number",
+            "min": 0,
+            "max": 20
+        },
+        "温度℃": {
+            "type": "number",
+            "min": -20,
+            "max": 80
+        },
+        "电流A": {
+            "type": "number",
+            "min": 0
+        }
+    },
+    "allowed_values": {}
+}

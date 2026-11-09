@@ -1,0 +1,7 @@
+﻿order_id,amount,created_at,status
+A001,100.50,2024-01-15,paid
+A001,32.00,2024-01-16,pending
+A003,-5.25,2024-01-17,paid
+A004,15.00,2024-02-30,cancelled
+A005,,2024-01-19,shipped
+A006,abc,2024-01-20,paid

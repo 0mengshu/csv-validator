@@ -1,0 +1,22 @@
+{
+  "required_columns": ["order_id", "amount", "created_at", "status"],
+  "not_null": ["order_id", "amount", "created_at"],
+  "unique": [["order_id"]],
+  "columns": {
+    "amount": {
+      "type": "number",
+      "min": 0
+    },
+    "created_at": {
+      "type": "date",
+      "format": "%Y-%m-%d"
+    }
+  },
+  "allowed_values": {
+    "status": ["pending", "paid", "cancelled"]
+  },
+  "severity": {
+    "allowed_values": "warning"
+  },
+  "max_issues": 200
+}

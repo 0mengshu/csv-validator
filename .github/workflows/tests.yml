@@ -1,0 +1,70 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.10", "3.13"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # 命令行工具：纯标准库，应零依赖通过
+      - name: Run unit tests
+        run: python -m unittest test_data_check.py
+
+      - name: CLI smoke test (clean data)
+        run: python data_check.py examples/data.csv --config examples/rules.json
+
+      - name: CLI smoke test (bad data, expect exit code 1)
+        shell: bash
+        run: |
+          set +e
+          python data_check.py examples/data_bad.csv --config examples/rules.json
+          code=$?
+          if [ "$code" -ne 1 ]; then
+            echo "expected exit code 1, got $code"
+            exit 1
+          fi
+
+      # 中文列名 / UTF-8 内容用例
+      - name: CLI smoke test (CJK headers)
+        shell: bash
+        run: |
+          set +e
+          python data_check.py examples/sensor_bad.csv --config examples/sensor_rules.json
+          code=$?
+          if [ "$code" -ne 1 ]; then
+            echo "expected exit code 1, got $code"
+            exit 1
+          fi
+
+      # 打包安装：验证 pip install 后 data-check 命令可用
+      - name: Package install smoke test
+        run: |
+          pip install .
+          data-check --version
+          data-check examples/data.csv --config examples/rules.json
+
+      # 图形界面：验证 gui.py 可导入、matplotlib 依赖声明完整
+      - name: Install tkinter (Linux only)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y python3-tk
+
+      - name: GUI import smoke test
+        run: |
+          pip install -r requirements.txt
+          python -c "import gui; print('gui import ok')"
+        env:
+          MPLBACKEND: Agg
